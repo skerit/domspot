@@ -385,7 +385,11 @@ DOMSpot.prototype.appeared = function appeared(query, options, callback) {
 
 			item = existing[i];
 
-			if (!item.offsetWidth) {
+			if (options.parent) {
+				item = item.parentElement;
+			}
+
+			if (!item || !item.offsetWidth) {
 				continue;
 			}
 
@@ -396,7 +400,7 @@ DOMSpot.prototype.appeared = function appeared(query, options, callback) {
 				) {
 
 				// Add it to the visible list
-				visible.push(item);
+				visible.push(existing[i]);
 
 				// Remove the original item
 				existing.splice(i, 1);

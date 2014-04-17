@@ -152,6 +152,7 @@ ___Arguments___
  * `topOffset` - How close the element should be to the viewport
  * `leftOffset` - How close the element should be to the viewport
  * `interval` - Per how many milliseconds the checker should fire. Default 250ms
+ * `parent` - If the parent element should be watched (good for hidden elements)
 * `callback(ArrayOfElements)` - Callback that gets an array of appeared elements
 
 __Example__
