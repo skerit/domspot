@@ -139,3 +139,26 @@ DOMSpot.removed('.added', function(list) {
 ```
 
 ---------------------------------------
+
+### appeared(query, options, callback)
+
+When an element matching the given query is first visible on the screen,
+the given callback will be called.
+
+___Arguments___
+
+* `query` - The CSS3 query selector the element should match to.
+* `options` - The optional object containing the following options:
+ * `topOffset` - How close the element should be to the viewport
+ * `leftOffset` - How close the element should be to the viewport
+ * `interval` - Per how many milliseconds the checker should fire. Default 250ms
+* `callback(ArrayOfElements)` - Callback that gets an array of appeared elements
+
+__Example__
+
+```js
+DOMSpot.appeared('.myClass', function(list) {
+	console.log('These items are now visible on the screen:');
+	console.log(list);
+});
+```
