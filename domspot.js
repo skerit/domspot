@@ -369,6 +369,8 @@ DOMSpot.prototype.appeared = function appeared(query, options, callback) {
 		    wLeft,
 		    wTop,
 		    item,
+		    iTop,
+		    iLeft,
 		    i;
 
 		if (!existing.length) {
@@ -393,10 +395,19 @@ DOMSpot.prototype.appeared = function appeared(query, options, callback) {
 				continue;
 			}
 
-			if (item.offsetTop + item.offsetHeight >= wTop &&
-				item.offsetTop - options.topOffset <= wTop + window.innerHeight &&
-				item.offsetLeft + item.offsetWidth >= wLeft &&
-				item.offsetLeft - options.leftOffset <= wLeft + window.innerWidth
+			iTop = that.getOffset(item, 'Top');
+			iLeft = that.getOffset(item, 'Left');
+
+			// Debug element positioning
+			// console.log((iTop + item.offsetHeight), '>=', wTop);
+			// console.log((iTop - options.topOffset), '<=', (wTop + window.innerHeight));
+			// console.log((iLeft + item.offsetWidth), '>=', wLeft);
+			// console.log((iLeft - options.leftOffset), '<=', (wLeft + window.innerWidth));
+
+			if (iTop + item.offsetHeight >= wTop &&
+				iTop - options.topOffset <= wTop + window.innerHeight &&
+				iLeft + item.offsetWidth >= wLeft &&
+				iLeft - options.leftOffset <= wLeft + window.innerWidth
 				) {
 
 				// Add it to the visible list
@@ -419,6 +430,31 @@ DOMSpot.prototype.appeared = function appeared(query, options, callback) {
 
 	// Perform the check every given amount of milliseconds
 	setInterval(check, options.interval);
+};
+
+/**
+ * Get the wanted offset relative to the root
+ *
+ * @author   Jelle De Loecker   <jelle@codedor.be>
+ * @since    0.1.1
+ * @version  0.1.1
+ *
+ * @param    {Object}   item
+ * @param    {String}   type
+ *
+ * @return   {Number}
+ */
+DOMSpot.prototype.getOffset = function getOffset(item, type) {
+
+	var result = item['offset' + type],
+	    parent = item.offsetParent;
+
+	while (parent) {
+		result += parent['offset' + type];
+		parent = parent.offsetParent;
+	}
+
+	return result;
 };
 
 return new DOMSpot();

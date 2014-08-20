@@ -1,6 +1,7 @@
-## 0.1.1 (WIP)
+## 0.1.1 (2014-08-20)
 
 * Added `appeared`: trigger callbacks when an element first appears on screen
+* Bugfix: only relative positions to an element's parent were used, not to root
 
 ## 0.1.0 (2014-03-25)
 
