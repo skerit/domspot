@@ -3,6 +3,7 @@
 * Bugfix: window.scrollX & window.scrollY are not available in IE, use fallback
 * Feature: Add "timer" property to DOMSpot, which is used as default timer for
   new "appeared" queries.
+* Mutation observer shim will only look for changes once per second, not 33 times
 
 ## 0.1.1 (2014-08-20)
 
