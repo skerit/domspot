@@ -39,6 +39,16 @@ h.a,d.e),d.b&&3===g.nodeType&&g.nodeValue!==h.b&&b.push(t({type:"characterData",
 
 DOMSpot = (function DOMSpotCreator(){
 
+var isIE;
+
+if (navigator.appName == 'Microsoft Internet Explorer') {
+	isIE = true;
+} else if (navigator.userAgent.indexOf('Trident/') > -1) {
+	isIE = true;
+} else {
+	isIE = false;
+}
+
 /**
  * The DOMSpot class
  *
@@ -53,6 +63,14 @@ function DOMSpot() {
 	    placed     = this._placed = {};
 	    taken      = this._taken = {};
 	    removed    = this._removed = {};
+
+	// "Appeared" timer
+	this.timer = 250;
+
+	// Don't stress IE too much
+	if (isIE) {
+		this.timer = 1500;
+	}
 
 	this._observer = new MutationObserver(function observeMutations(mutations) {
 
@@ -357,7 +375,7 @@ DOMSpot.prototype.appeared = function appeared(query, options, callback) {
 	}
 
 	if (!options.interval || typeof options.interval !== 'number') {
-		options.interval = 250;
+		options.interval = this.timer || 250;
 	}
 
 	// Get all the already existing items
@@ -377,8 +395,17 @@ DOMSpot.prototype.appeared = function appeared(query, options, callback) {
 			return;
 		}
 
+		// Use the scrollX property if it's available
 		wLeft = window.scrollX;
-		wTop = window.scrollY;
+
+		// If it has been found, also use the scrollY value
+		if (wLeft != null) {
+			wTop = window.scrollY;
+		} else {
+			// Use another method
+			wLeft = (window.pageXOffset !== undefined) ? window.pageXOffset : (document.documentElement || document.body.parentNode || document.body).scrollLeft;
+			wTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+		}
 
 		visible = [];
 

@@ -1,3 +1,9 @@
+## 0.1.2 (2014-10-27)
+
+* Bugfix: window.scrollX & window.scrollY are not available in IE, use fallback
+* Feature: Add "timer" property to DOMSpot, which is used as default timer for
+  new "appeared" queries.
+
 ## 0.1.1 (2014-08-20)
 
 * Added `appeared`: trigger callbacks when an element first appears on screen
